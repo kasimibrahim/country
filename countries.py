@@ -8,6 +8,7 @@ class Countries:
         self.tk = tk
         self.score = 0
         self.current_question = Label()
+        self.current_flag = ''
         self.africa = {
             1: Countries.CountryQuestion('algeria'.lower(), tk),
             2: Countries.CountryQuestion('angola'.lower(), tk),
@@ -212,8 +213,11 @@ class Countries:
         del self.current_question
         selected = r.choice(list(self.africa.keys()))
         self.current_question = self.africa[selected]
-
         self.current_question.show()
+        self.current_flag = self.africa[selected].location
+
+    def get_flag(self):
+        return self.current_flag
 
     class CountryQuestion:
         def __init__(self, key, tk):
@@ -225,6 +229,9 @@ class Countries:
             # self.label.grid(row=1, column=1)
             # self.entry.grid(row=1, column=2)
             self.entry.pack()
+
+
+
 
 
 def check_answer(image_directory, question):
