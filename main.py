@@ -16,7 +16,6 @@ score = 0
 
 game = Countries(window)
 
-bucketList = game.africa
 if score <= 50:
     bucketList = game.africa
 elif score > 50 and score <= 100:
@@ -25,7 +24,7 @@ elif score > 100 and score <= 120:
     bucketList = game.north_america
 elif score > 120 and score <= 130:
     bucketList = game.europe
-elif bucketList > 130 and bucketList <= 150:
+elif score > 130 and score <= 150:
     bucketList = game.south_america
 else:
     print("CONGRATULATIONS!")
@@ -45,9 +44,9 @@ def shuffle():
     img_frame.config(image=PhotoImage(current_question.location))
 
 
-next = Button(window, text="NEXT", command=shuffle)
-next.pack()
-exit = Button(window, text='EXIT', command=window.quit)
-exit.pack()
+nxt = Button(window, text="NEXT", command=shuffle)
+nxt.pack()
+ext = Button(window, text='EXIT', command=window.quit)
+ext.pack()
 
 window.mainloop()
