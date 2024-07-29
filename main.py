@@ -32,22 +32,16 @@ else:
     print("CONGRATULATIONS!")
 
 
-# button = Controls(window, Button)
-# start = button.answer_button('START GAME')
-# start.pack()
-# start.destroy()
-# end = button.activate_exit_buttons('EXIT GAME')
-
-
 def shuffle():
     global question_tracker
     selected = r.choice(list(bucketList.keys()))
     current_question = bucketList[selected]
-    img = PhotoImage(current_question.location)
+    img = PhotoImage(file=current_question.location)
     img_frame.config(image=img)
     current_question.show()
     question_tracker = current_question
     print(current_question.location)
+    img_frame.update()
 
 
 def submit():
@@ -62,11 +56,15 @@ nxt = Button(window, text="NEXT", command=shuffle)
 submit = Button(window, text='SUBMIT', command=submit)
 nxt.pack()
 submit.pack()
-Label(window, text='CURRENT SCORE: '+str(score)).pack()
+
 ext = Button(window, text='EXIT', command=exit)
 ext.pack(side=BOTTOM)
 
+display_score = Label(window, text='CURRENT SCORE: '+str(score))
+display_score.pack(side=BOTTOM)
+
 if right:
     score += 50
-
+    display_score.update()
+    print(score)
 window.mainloop()
