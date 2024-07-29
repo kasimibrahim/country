@@ -41,7 +41,8 @@ def shuffle():
     current_question.show()
     question_tracker = current_question
     print(current_question.location)
-    img_frame.update()
+    while True:
+        img_frame.update()
 
 
 def submit():
