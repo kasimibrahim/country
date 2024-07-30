@@ -404,6 +404,7 @@ class Countries:
             self.key = key
             self.location = ('./countries/' + key + '.png').strip()
             self.entry = Entry(tk)
+            self.answered = False
 
         def show(self):
             # self.label.grid(row=1, column=1)
@@ -413,6 +414,11 @@ class Countries:
         def get_answer(self):
             return self.entry.get()
 
+        def disable(self):
+            self.entry.config(state='disabled')
+            self.answered = True
+        def attempt(self):
+            return self.answered
 
 def check_answer(image_directory, question):
     return image_directory == question.location

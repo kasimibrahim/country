@@ -20,16 +20,7 @@ right = False
 bucketList = game.africa
 question_tracker = Countries(window).CountryQuestion('', window)
 
-if score > 50 and score <= 100:
-    bucketList = game.asia
-elif score > 100 and score <= 120:
-    bucketList = game.north_america
-elif score > 120 and score <= 130:
-    bucketList = game.europe
-elif score > 130 and score <= 150:
-    bucketList = game.south_america
-else:
-    print("CONGRATULATIONS!")
+
 
 
 def shuffle():
@@ -46,15 +37,34 @@ def shuffle():
 
 
 def submit():
-    global right
+    global score
+    global bucketList
+
     val = question_tracker.get_answer()
+
     print('answered:', val)
     print(game.shorthand[question_tracker.key])
-    right = val == game.shorthand[question_tracker.key]
+
+    if val == game.shorthand[question_tracker.key] and not question_tracker.attempt():
+        score += 2
+        print(score)
+    question_tracker.disable()
+    display_score.config(text='CURRENT SCORE: '+str(score))
+    display_score.update()
+
+    if score > 50 and score <= 100:
+        bucketList = game.asia
+    elif score > 100 and score <= 120:
+        bucketList = game.north_america
+    elif score > 120 and score <= 130:
+        bucketList = game.europe
+    elif score > 130 and score <= 150:
+        bucketList = game.south_america
 
 
 nxt = Button(window, text="NEXT", command=shuffle)
 submit = Button(window, text='SUBMIT', command=submit)
+
 nxt.pack()
 submit.pack()
 
@@ -64,8 +74,8 @@ ext.pack(side=BOTTOM)
 display_score = Label(window, text='CURRENT SCORE: '+str(score))
 display_score.pack(side=BOTTOM)
 
-if right:
-    score += 50
-    display_score.update()
-    print(score)
+# if right:
+#     score += 50
+#     display_score.update()
+#     print(score)
 window.mainloop()
