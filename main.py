@@ -16,7 +16,7 @@ score = 0
 
 game = Countries(window)
 right = False
-
+garbage = []
 bucketList = game.africa
 question_tracker = Countries(window).CountryQuestion('', window)
 
@@ -27,6 +27,7 @@ def shuffle():
     global question_tracker
     selected = r.choice(list(bucketList.keys()))
     current_question = bucketList[selected]
+    garbage.append(current_question)
     img = PhotoImage(file=current_question.location)
     img_frame.config(image=img)
     current_question.show()
@@ -60,6 +61,11 @@ def submit():
         bucketList = game.europe
     elif score > 130 and score <= 150:
         bucketList = game.south_america
+
+    if len(garbage) == 6:
+        for g in garbage:
+            g.get_entry().destroy()
+
 
 
 nxt = Button(window, text="NEXT", command=shuffle)

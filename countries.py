@@ -417,8 +417,13 @@ class Countries:
         def disable(self):
             self.entry.config(state='disabled')
             self.answered = True
+
         def attempt(self):
             return self.answered
+
+        def get_entry(self):
+            return self.entry
+
 
 def check_answer(image_directory, question):
     return image_directory == question.location
