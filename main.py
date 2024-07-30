@@ -3,6 +3,11 @@ from countries import Countries
 from controls import Controls
 import random as r
 
+
+"""
+Name: Kasim Ibrahim
+Robotics Game platform project 
+"""
 window = Tk()
 window.title("ROBOTICS GAME")
 window.minsize(500, 500)
@@ -17,15 +22,16 @@ score = 0
 game = Countries(window)
 right = False
 garbage = []
+cleaner_size = 0
 bucketList = game.africa
 question_tracker = Countries(window).CountryQuestion('', window)
-
-
 
 
 def shuffle():
     global question_tracker
     selected = r.choice(list(bucketList.keys()))
+    while bucketList[selected] in garbage:
+        selected = r.choice(list(bucketList.keys()))
     current_question = bucketList[selected]
     garbage.append(current_question)
     img = PhotoImage(file=current_question.location)
@@ -40,17 +46,20 @@ def shuffle():
 def submit():
     global score
     global bucketList
-
+    global cleaner_size
     val = question_tracker.get_answer()
-
     print('answered:', val)
-    print(game.shorthand[question_tracker.key])
-
-    if val == game.shorthand[question_tracker.key] and not question_tracker.attempt():
-        score += 2
-        print(score)
+    try:
+        print(game.shorthand[question_tracker.key])
+        if val.lower() == game.shorthand[question_tracker.key].lower() and not question_tracker.attempt():
+            score += 2
+            print(score)
+    except KeyError:
+        print("CLICK ON NEXT FOR THE FIRST TIME")
+        cleaner_size -= 1
     question_tracker.disable()
-    display_score.config(text='CURRENT SCORE: '+str(score))
+    cleaner_size += 1
+    display_score.config(text='CURRENT SCORE: ' + str(score))
     display_score.update()
 
     if score > 50 and score <= 100:
@@ -62,10 +71,10 @@ def submit():
     elif score > 130 and score <= 150:
         bucketList = game.south_america
 
-    if len(garbage) == 6:
-        for g in garbage:
-            g.get_entry().destroy()
-
+    if cleaner_size == 6:
+        for g in range(len(garbage)-1, -1, -1):
+            garbage[g].get_entry().destroy()
+            cleaner_size -= 1
 
 
 nxt = Button(window, text="NEXT", command=shuffle)
@@ -77,7 +86,7 @@ submit.pack()
 ext = Button(window, text='EXIT', command=exit)
 ext.pack(side=BOTTOM)
 
-display_score = Label(window, text='CURRENT SCORE: '+str(score))
+display_score = Label(window, text='CURRENT SCORE: ' + str(score))
 display_score.pack(side=BOTTOM)
 
 # if right:
